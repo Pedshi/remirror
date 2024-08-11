@@ -8,6 +8,7 @@ import {
   getMarkRanges,
   getSelectedWord,
   getTextSelection,
+  isAllSelection,
   isElementDomNode,
   isSelectionEmpty,
   isTextSelection,
@@ -162,7 +163,10 @@ function createSelectionPositioner(isActive: (state: EditorState) => boolean) {
     getActive: (props) => {
       const { state, view } = props;
 
-      if (!isActive(state) || !isTextSelection(state.selection)) {
+      if (
+        !isActive(state) ||
+        !(isTextSelection(state.selection) || isAllSelection(state.selection))
+      ) {
         return Positioner.EMPTY;
       }
 
